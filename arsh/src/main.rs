@@ -1,4 +1,4 @@
-/* Pashmina shell
+/* Another Rust Shell
  * Trevor Calderwood
  */
 use std::fs::File;
