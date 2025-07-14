@@ -1,6 +1,5 @@
 /* Pashmina shell
  * Trevor Calderwood
- * Last Modified 7/5/25
  */
 use std::fs::File;
 use std::io::BufRead;
@@ -43,7 +42,7 @@ fn process_line(line:String, in_fd::i32, out_fd::i32, flags::i32) -> i32 {
 	0
 }
 
-fn arg_parse(line:String, &mut argc:i32) {
+fn arg_parse(line:String, mut argc:i32&) {
 
 }
 
