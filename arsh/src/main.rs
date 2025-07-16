@@ -19,30 +19,50 @@ fn main() {
 	let margc = args().len();
 
 	if margc == 1 {
-		let mut streamp = stdin;
+		let stream = io::stdin();
 	}
 	else {
-		let mut streamp = File::open(margv[1]);
+		let stream = File::open(margv[1]);
 	}
 
 	loop {
 
 		// get line
-
+		let mut line = String::new();
+		stream.read_line(&line);
+		let mut line_len = line.len();
+		
 		// remove trailing newline
-
+		_ = line.pop();
+		
 		// remove comments
-
-		// execute line
-		process_line(buf, 0, 1, WAIT|EXPAND);
+		let ret = remove_comments(line, line_len);
+		if ret == 0 {
+			// execute line
+			process_line(buf, 0, 1, WAIT|EXPAND);
+		}
 	}
+}
+
+// removes any comment starting with #. Ignores $#
+// returns 0 on success, -1 on failure
+fn remove_comments(line:String, line_len:i32) -> i32 {
+	if(line[0] == '#') {
+		return -1;
+	}
+	for i in (1..line_len - 1) {
+		if (line[i] == '#') AND (line[i-1] != '$') {
+			line.truncate(i);
+		}
+	}
+	0
 }
 
 fn process_line(line:String, in_fd::i32, out_fd::i32, flags::i32) -> i32 {
 	0
 }
 
-fn arg_parse(line:String, mut argc:i32&) {
+fn arg_parse(line:String, argc:i32) {
 
 }
 
