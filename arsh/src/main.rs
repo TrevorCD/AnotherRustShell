@@ -26,17 +26,16 @@ fn main() {
 	}
 
 	loop {
-
 		// get line
 		let mut line = String::new();
 		stream.read_line(&line);
 		let mut line_len = line.len();
 		
-		// remove trailing newline
+		// remove trailing newline char
 		_ = line.pop();
 		
 		// remove comments
-		let ret = remove_comments(line, line_len);
+		let (ret, line) = remove_comments(line, line_len);
 		if ret == 0 {
 			// execute line
 			process_line(buf, 0, 1, WAIT|EXPAND);
@@ -46,16 +45,16 @@ fn main() {
 
 // removes any comment starting with #. Ignores $#
 // returns 0 on success, -1 on failure
-fn remove_comments(line:String, line_len:i32) -> i32 {
-	if(line[0] == '#') {
-		return -1;
+fn remove_comments(line:String, line_len:i32) -> (String, i32) {
+	if line[0] == '#' {
+		(line, -1)
 	}
 	for i in (1..line_len - 1) {
 		if (line[i] == '#') AND (line[i-1] != '$') {
 			line.truncate(i);
 		}
 	}
-	0
+	(line, 0)
 }
 
 fn process_line(line:String, in_fd::i32, out_fd::i32, flags::i32) -> i32 {
