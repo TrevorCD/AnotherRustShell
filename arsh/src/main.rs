@@ -35,23 +35,27 @@ fn main() {
 		_ = line.pop();
 		
 		// remove comments
-		let (ret, line) = remove_comments(line, line_len);
+		let ret = remove_comments(&line, line_len);
 		if ret == 0 {
 			// execute line
 			process_line(buf, 0, 1, WAIT|EXPAND);
+		}
+		else {
+			// handle error
 		}
 	}
 }
 
 // removes any comment starting with #. Ignores $#
-fn remove_comments(line: &String, line_len: i32) {
+fn remove_comments(line: &mut String, line_len: i32) {
 	if line[0] == '#' {
-		line.truncate(0);
-		0
+		// line is empty, nothing to execute
+		-1
 	}
 	for i in (1..line_len - 1) {
 		if (line[i] == '#') AND (line[i-1] != '$') {
 			line.truncate(i);
+			break;
 		}
 	}
 	0
@@ -66,7 +70,7 @@ fn arg_parse(line: &String, argc: i32) {
 }
 
 fn print_args(argv: Args, argc: i32) {
-
+	
 }
 
 fn squish() -> i32 {
