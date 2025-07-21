@@ -44,28 +44,28 @@ fn main() {
 }
 
 // removes any comment starting with #. Ignores $#
-// returns 0 on success, -1 on failure
-fn remove_comments(line:String, line_len:i32) -> (String, i32) {
+fn remove_comments(line: &String, line_len: i32) {
 	if line[0] == '#' {
-		(line, -1)
+		line.truncate(0);
+		0
 	}
 	for i in (1..line_len - 1) {
 		if (line[i] == '#') AND (line[i-1] != '$') {
 			line.truncate(i);
 		}
 	}
-	(line, 0)
-}
-
-fn process_line(line:String, in_fd::i32, out_fd::i32, flags::i32) -> i32 {
 	0
 }
 
-fn arg_parse(line:String, argc:i32) {
+fn process_line(line: &String, in_fd: i32, out_fd: i32, flags: i32) -> i32 {
+	0
+}
+
+fn arg_parse(line: &String, argc: i32) {
 
 }
 
-fn print_args(argv:Args, argc:i32) {
+fn print_args(argv: Args, argc: i32) {
 
 }
 
